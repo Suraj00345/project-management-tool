@@ -88,12 +88,11 @@ export default function OrganivoProfile() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Account Settings</h1>
-          <p className="text-gray-600 mt-2">
-            Manage your profile information and account security
-          </p>
+          <p className="text-gray-600 mt-2">Manage your profile information and account security</p>
         </div>
 
         <div className="grid lg:grid-cols-4 gap-8">
@@ -120,16 +119,12 @@ export default function OrganivoProfile() {
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors ${
-                        activeTab === tab.id
-                          ? "bg-blue-50 text-blue-600 border border-blue-200"
-                          : "text-gray-700 hover:bg-gray-50"
+                        activeTab === tab.id ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-700 hover:bg-gray-50"
                       }`}
                     >
                       <Icon size={20} className="mr-3" />
                       <span className="font-medium">{tab.label}</span>
-                      {tab.id === "email" && emailVerified && (
-                        <Check size={16} className="ml-auto text-green-500" />
-                      )}
+                      {tab.id === "email" && emailVerified && <Check size={16} className="ml-auto text-green-500" />}
                     </button>
                   );
                 })}
@@ -145,16 +140,12 @@ export default function OrganivoProfile() {
                 <div className="p-8">
                   <div className="flex items-center mb-6">
                     <User className="text-blue-500 mr-3" size={24} />
-                    <h2 className="text-2xl font-bold text-gray-900">
-                      Profile Information
-                    </h2>
+                    <h2 className="text-2xl font-bold text-gray-900">Profile Information</h2>
                   </div>
 
                   <div className="grid gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        First Name
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
                       <input
                         type="text"
                         name="firstName"
@@ -165,9 +156,7 @@ export default function OrganivoProfile() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
                       <input
                         type="text"
                         name="lastName"
@@ -178,9 +167,7 @@ export default function OrganivoProfile() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                       <input
                         type="email"
                         name="email"
@@ -207,16 +194,12 @@ export default function OrganivoProfile() {
                 <div className="p-8">
                   <div className="flex items-center mb-6">
                     <Lock className="text-blue-500 mr-3" size={24} />
-                    <h2 className="text-2xl font-bold text-gray-900">
-                      Change Password
-                    </h2>
+                    <h2 className="text-2xl font-bold text-gray-900">Change Password</h2>
                   </div>
 
                   <div className="max-w-md space-y-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Current Password
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
                       <div className="relative">
                         <input
                           type={showCurrentPassword ? "text" : "password"}
@@ -228,24 +211,16 @@ export default function OrganivoProfile() {
                         />
                         <button
                           type="button"
-                          onClick={() =>
-                            setShowCurrentPassword(!showCurrentPassword)
-                          }
+                          onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                           className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                         >
-                          {showCurrentPassword ? (
-                            <EyeOff size={20} />
-                          ) : (
-                            <Eye size={20} />
-                          )}
+                          {showCurrentPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        New Password
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
                       <div className="relative">
                         <input
                           type={showNewPassword ? "text" : "password"}
@@ -260,19 +235,13 @@ export default function OrganivoProfile() {
                           onClick={() => setShowNewPassword(!showNewPassword)}
                           className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                         >
-                          {showNewPassword ? (
-                            <EyeOff size={20} />
-                          ) : (
-                            <Eye size={20} />
-                          )}
+                          {showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Confirm New Password
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
                       <div className="relative">
                         <input
                           type={showConfirmPassword ? "text" : "password"}
@@ -284,24 +253,16 @@ export default function OrganivoProfile() {
                         />
                         <button
                           type="button"
-                          onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                          }
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                           className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                         >
-                          {showConfirmPassword ? (
-                            <EyeOff size={20} />
-                          ) : (
-                            <Eye size={20} />
-                          )}
+                          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                       </div>
                     </div>
 
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-2">
-                        Password Requirements:
-                      </h4>
+                      <h4 className="font-medium text-gray-900 mb-2">Password Requirements:</h4>
                       <ul className="text-sm text-gray-600 space-y-1">
                         <li className="flex items-center">
                           <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></div>
@@ -335,9 +296,7 @@ export default function OrganivoProfile() {
                 <div className="p-8">
                   <div className="flex items-center mb-6">
                     <Mail className="text-blue-500 mr-3" size={24} />
-                    <h2 className="text-2xl font-bold text-gray-900">
-                      Email Verification
-                    </h2>
+                    <h2 className="text-2xl font-bold text-gray-900">Email Verification</h2>
                   </div>
 
                   <div className="max-w-md">
@@ -347,28 +306,20 @@ export default function OrganivoProfile() {
                         <div className="flex items-center">
                           <Mail className="text-gray-400 mr-3" size={20} />
                           <div>
-                            <p className="font-medium text-gray-900">
-                              {profileData.email}
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Current email address
-                            </p>
+                            <p className="font-medium text-gray-900">{profileData.email}</p>
+                            <p className="text-sm text-gray-600">Current email address</p>
                           </div>
                         </div>
                         <div className="flex items-center">
                           {emailVerified ? (
                             <div className="flex items-center text-green-600">
                               <Check size={20} className="mr-1" />
-                              <span className="text-sm font-medium">
-                                Verified
-                              </span>
+                              <span className="text-sm font-medium">Verified</span>
                             </div>
                           ) : (
                             <div className="flex items-center text-red-600">
                               <X size={20} className="mr-1" />
-                              <span className="text-sm font-medium">
-                                Not Verified
-                              </span>
+                              <span className="text-sm font-medium">Not Verified</span>
                             </div>
                           )}
                         </div>
@@ -379,10 +330,7 @@ export default function OrganivoProfile() {
                       <>
                         {!codeSent ? (
                           <div>
-                            <p className="text-gray-600 mb-4">
-                              To verify your email address, we'll send a 6-digit
-                              verification code to your email.
-                            </p>
+                            <p className="text-gray-600 mb-4">To verify your email address, we'll send a 6-digit verification code to your email.</p>
                             <button
                               onClick={sendVerificationCode}
                               className="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
@@ -394,26 +342,17 @@ export default function OrganivoProfile() {
                           <div>
                             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                               <div className="flex items-center">
-                                <Bell
-                                  className="text-blue-500 mr-2"
-                                  size={20}
-                                />
-                                <p className="text-blue-800 text-sm">
-                                  Verification code sent to {profileData.email}
-                                </p>
+                                <Bell className="text-blue-500 mr-2" size={20} />
+                                <p className="text-blue-800 text-sm">Verification code sent to {profileData.email}</p>
                               </div>
                             </div>
 
                             <div className="mb-4">
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Enter 6-digit verification code
-                              </label>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">Enter 6-digit verification code</label>
                               <input
                                 type="text"
                                 value={verificationCode}
-                                onChange={(e) =>
-                                  setVerificationCode(e.target.value)
-                                }
+                                onChange={(e) => setVerificationCode(e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-center text-2xl font-mono tracking-widest"
                                 placeholder="000000"
                                 maxLength="6"
@@ -444,12 +383,8 @@ export default function OrganivoProfile() {
                         <div className="flex items-center">
                           <Check className="text-green-500 mr-2" size={20} />
                           <div>
-                            <p className="text-green-800 font-medium">
-                              Email Verified!
-                            </p>
-                            <p className="text-green-700 text-sm">
-                              Your email address has been successfully verified.
-                            </p>
+                            <p className="text-green-800 font-medium">Email Verified!</p>
+                            <p className="text-green-700 text-sm">Your email address has been successfully verified.</p>
                           </div>
                         </div>
                       </div>
@@ -461,7 +396,8 @@ export default function OrganivoProfile() {
           </div>
         </div>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }

@@ -1,33 +1,22 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { AuthProvider } from "./Auth/AuthContext";
-import ProtectedRoute from "./Auth/ProtectedRoute";
-import HomePage from "./pages/HomePage";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import TasksPage from "./pages/TasksPage";
 import UpdateProfile from "./pages/UpdateProfile";
+import ProtectedRoute from "./Layouts/ProtectedRoute";
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            {/* Protected Routes */}
+      <Router>
+        <Routes>
+          <>
             <Route
-              path="/dashboard"
+              path="/"
               element={
                 <ProtectedRoute>
                   <DashboardPage />
@@ -43,7 +32,7 @@ function App() {
               }
             />
             <Route
-              path="/tasks"
+              path="/projects/:projectId"
               element={
                 <ProtectedRoute>
                   <TasksPage />
@@ -58,11 +47,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* Redirect unknown routes to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
+          </>
+
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+
+          {/* Redirect unknown routes to home */}
+          <Route path="*" element={<>Not Found</>} />
+        </Routes>
+      </Router>
     </>
   );
 }
