@@ -24,7 +24,6 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-
             {/* Protected Routes */}
             <Route
               path="/dashboard"
@@ -50,7 +49,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             {/* Redirect unknown routes to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
