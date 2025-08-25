@@ -41,7 +41,6 @@ const EmailForm = () => {
       });
 
       setFormMode("verify");
-      console.log(response);
     } catch (error) {
       toast.error(error.message || "Failed to send verification code. Please try again.");
     }
