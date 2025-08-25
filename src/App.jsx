@@ -17,20 +17,14 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
 
-          <Route
-            path="/"
-            element={
-              <AuthGuard>
-                <DashboardPage />
-              </AuthGuard>
-            }
-          />
-          <Route path="/my-account" element={<UpdateProfile />} />
+          <Route element={<AuthGuard />}>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/my-account" element={<UpdateProfile />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:projectId" element={<TasksPage />} />
+          </Route>
 
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:projectId" element={<TasksPage />} />
-
-          <Route path="*" element={<>Not Found</>} />
+          <Route path="*" element={<>404 Not Found</>} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import LoadingScreen from "../Layouts/LoadingScreen";
 
 const AuthGuard = ({ children }) => {
@@ -18,7 +18,7 @@ const AuthGuard = ({ children }) => {
   }
 
   if (authStatus === "AUTHENTICATED") {
-    return <>{children}</>;
+    return children ? children : <Outlet />;
   }
 
   return <LoadingScreen />;
