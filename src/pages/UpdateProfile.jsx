@@ -396,8 +396,6 @@ export default function OrganivoProfile() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }
