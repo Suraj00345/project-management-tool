@@ -9,6 +9,7 @@ import UpdateProfile from "./pages/UpdateProfile";
 import AuthProvider from "./providers/AuthProvider";
 import AuthGuard from "./guards/AuthGuard";
 import HomeLayout from "./Layouts/HomeLayout";
+import SidebarLayout from "./Layouts/SidebarLayout";
 
 function App() {
   return (
@@ -20,12 +21,13 @@ function App() {
 
           <Route element={<AuthGuard />}>
             <Route element={<HomeLayout />}>
-              <Route path="/" element={<DashboardPage />} />
-              <Route path="/my-account" element={<UpdateProfile />} />
-              <Route path="/projects" element={<ProjectsPage />} />
+              <Route element={<SidebarLayout />}>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/my-account" element={<UpdateProfile />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+              </Route>
+              <Route path="/projects/:projectId" element={<TasksPage />} />
             </Route>
-
-            <Route path="/projects/:projectId" element={<TasksPage />} />
           </Route>
 
           <Route path="*" element={<>404 Not Found</>} />
