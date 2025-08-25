@@ -57,3 +57,54 @@ export const refreshSession = async () => {
 
     return response.data.data;
 };
+
+// update profile
+export const updateProfileApi = async (firstName, lastName) => {
+    const response = await axios.patch("/auth/profile", { firstName, lastName });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Profile update failed");
+    }
+
+    return response.data.data;
+}
+
+export const updatePasswordApi = async (currentPassword, newPassword) => {
+    const response = await axios.patch("/auth/password", { currentPassword, newPassword });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Password update failed");
+    }
+
+    return response.data.message;
+};
+
+export const updateEmailApi = async (newEmail) => {
+    const response = await axios.patch("/auth/email", { email: newEmail });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Email update failed");
+    }
+
+    return response.data.data;
+}
+
+export const resendVerificationMailAPi = async (sessionId) => {
+    const response = await axios.post("/auth/email/resend", { sessionId });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Resend verification failed");
+    }
+
+    return response.data.data;
+};
+
+export const verifyEmailCodeApi = async (sessionId, code) => {
+    const response = await axios.post("/auth/email/verify", { sessionId, code });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Email verification failed");
+    }
+
+    return response.data.data;
+};

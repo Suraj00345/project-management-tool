@@ -36,6 +36,18 @@ export const useAuthStore = create(
             updateUser: (user) => {
                 set({ user: user }, false, "authstore/update");
             },
+
+            updateUserName: (firstName, lastName) => {
+                set((state) => ({
+                    user: { ...state.user, firstName, lastName },
+                }), false, "authstore/updateUserName");
+            },
+
+            updateUserEmail: (email) => {
+                set((state) => ({
+                    user: { ...state.user, email },
+                }), false, "authstore/updateUserEmail");
+            }
         }),
         { name: "AuthStore" }
     )
