@@ -8,6 +8,7 @@ import TasksPage from "./pages/TasksPage";
 import UpdateProfile from "./pages/UpdateProfile";
 import AuthProvider from "./providers/AuthProvider";
 import AuthGuard from "./guards/AuthGuard";
+import HomeLayout from "./Layouts/HomeLayout";
 
 function App() {
   return (
@@ -18,9 +19,12 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
 
           <Route element={<AuthGuard />}>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/my-account" element={<UpdateProfile />} />
-            <Route path="/projects" element={<ProjectsPage />} />
+            <Route element={<HomeLayout />}>
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/my-account" element={<UpdateProfile />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+            </Route>
+
             <Route path="/projects/:projectId" element={<TasksPage />} />
           </Route>
 
