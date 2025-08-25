@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { loginApi } from "../utils/api-client";
 import { useAuthStore } from "../store/useAuthStore";
+import SubmitButton from "../components/Auth/SubmitButton";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -80,13 +81,7 @@ export default function Login() {
               </div>
 
               {/* Login Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer disabled:opacity-50"
-              >
-                {isSubmitting ? "Signing In..." : "Sign In"}
-              </button>
+              <SubmitButton isSubmitting={isSubmitting} buttonText="Sign In" loadingText="Signing In..." type="submit" />
             </div>
           </form>
 

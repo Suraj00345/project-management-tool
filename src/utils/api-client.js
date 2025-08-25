@@ -1,7 +1,5 @@
 import axios from "./axios";
 
-
-
 // Signup
 export const registerAPI = async ({ firstName, lastName, email, password }) => {
     // Registration logic here

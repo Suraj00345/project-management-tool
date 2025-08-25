@@ -5,6 +5,7 @@ import { useRegistrationStore } from "../../store/useRegisrationStore";
 import toast from "react-hot-toast";
 import { resendAccountVerification, verifyEmail } from "../../utils/api-client";
 import { useAuthStore } from "../../store/useAuthStore";
+import SubmitButton from "./SubmitButton";
 
 const VerificationForm = () => {
   const { reset, email } = useRegistrationStore((state) => state);
@@ -75,12 +76,7 @@ const VerificationForm = () => {
             {errors.verificationCode && <span className="text-red-500 text-sm">{errors.verificationCode.message}</span>}
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer"
-          >
-            Verify
-          </button>
+          <SubmitButton isSubmitting={isSubmitting} buttonText="Verify" loadingText="Verifying..." type="submit" />
         </div>
 
         <div className="mt-6 text-center">

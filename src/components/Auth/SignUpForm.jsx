@@ -4,6 +4,7 @@ import FormCard from "./FormCard";
 import { useRegistrationStore } from "../../store/useRegisrationStore";
 import { registerAPI } from "../../utils/api-client";
 import toast from "react-hot-toast";
+import SubmitButton from "./SubmitButton";
 
 const SignUpForm = () => {
   const { setRegistrationData, setVerify } = useRegistrationStore((state) => state);
@@ -133,14 +134,7 @@ const SignUpForm = () => {
             {errors.confirmPassword && <span className="text-red-500 text-sm">{errors.confirmPassword.message}</span>}
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer"
-          >
-            {isSubmitting ? "Signing Up..." : "Sign Up"}
-          </button>
+          <SubmitButton isSubmitting={isSubmitting} buttonText="Sign Up" loadingText="Signing Up..." type="submit" />
         </div>
       </form>
 
