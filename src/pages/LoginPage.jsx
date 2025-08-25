@@ -1,20 +1,39 @@
 import { useForm } from "react-hook-form";
 import FloatingElements from "../components/Auth/FloatingElements";
 import FormCard from "../components/Auth/FormCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { loginApi } from "../utils/api-client";
+import { useAuthStore } from "../store/useAuthStore";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { login } = useAuthStore((state) => state);
   const {
     register,
     handleSubmit,
-
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "rs.2001.saha@gmail.com",
+      password: "12345678",
+    },
+  });
 
   const onSubmit = async (data) => {
     if (isSubmitting) return;
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a network request
-    console.log(data);
+    try {
+      const response = await loginApi(data.email, data.password);
+      if (!response.token) {
+        throw new Error("Login failed. Please try again.");
+      }
+
+      login(response.user, response.token);
+      toast.success("Login successful!");
+      navigate("/", { replace: true });
+    } catch (error) {
+      toast.error(error.message || "Login failed. Please try again.");
+    }
   };
 
   return (
