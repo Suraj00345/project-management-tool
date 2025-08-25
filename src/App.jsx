@@ -25,14 +25,7 @@ function App() {
               </AuthGuard>
             }
           />
-          <Route
-            path="/my-account"
-            element={
-              <AuthGuard>
-                <UpdateProfile />
-              </AuthGuard>
-            }
-          />
+          <Route path="/my-account" element={<UpdateProfile />} />
 
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:projectId" element={<TasksPage />} />
