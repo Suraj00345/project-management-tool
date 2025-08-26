@@ -84,28 +84,28 @@ const EmailForm = () => {
   };
 
   return (
-    <div className="p-8">
-      <div className="flex items-center mb-6">
-        <Mail className="text-blue-500 mr-3" size={24} />
-        <h2 className="text-2xl font-bold text-gray-900">Email Verification</h2>
+   <div className="p-4 sm:p-6 md:p-8 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
+      <div className="flex items-center mb-4 sm:mb-6">
+        <Mail className="text-blue-500 mr-2 sm:mr-3 flex-shrink-0" size={20} />
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Email Verification</h2>
       </div>
 
       <div className="w-full">
         {formMode === "view" && (
           <>
             <div className="mb-4">
-              <div className="flex items-center justify-between p-4 rounded-lg border border-gray-200">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 rounded-lg border border-gray-200 space-y-3 sm:space-y-0">
                 <div className="flex items-center">
-                  <Mail className="text-gray-400 mr-3" size={20} />
-                  <div>
-                    <p className="font-medium text-gray-900">{user.email}</p>
-                    <p className="text-sm text-gray-600">Current email address</p>
+                  <Mail className="text-gray-400 mr-2 sm:mr-3 flex-shrink-0" size={18} />
+                  <div className="min-w-0">
+                    <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{user.email}</p>
+                    <p className="text-xs sm:text-sm text-gray-600">Current email address</p>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center justify-end sm:justify-center">
                   <div className="flex items-center text-green-600">
-                    <Check size={20} className="mr-1" />
-                    <span className="text-sm font-medium">Verified</span>
+                    <Check size={18} className="mr-1" />
+                    <span className="text-xs sm:text-sm font-medium">Verified</span>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ const EmailForm = () => {
 
             <button
               onClick={() => setFormMode("edit")}
-              className={clsx("cursor-pointer w-full  px-6 py-3 rounded-lg font-medium transition-colors bg-blue-500 hover:bg-blue-600 text-white")}
+              className={clsx("cursor-pointer w-full px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base")}
             >
               Edit Email Address
             </button>
@@ -125,7 +125,7 @@ const EmailForm = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
               <input
-                className={clsx(errors.email ? "auth-input-error " : "auth-input ", "py-3")}
+                className={clsx(errors.email ? "auth-input-error " : "auth-input ", "py-2.5 sm:py-3 text-sm sm:text-base")}
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -134,21 +134,21 @@ const EmailForm = () => {
                   },
                 })}
               />
-              {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
+              {errors.email && <span className="text-red-500 text-xs sm:text-sm">{errors.email.message}</span>}
             </div>
 
             <div className="">
-              <p className="text-gray-500 mt-2 mb-4 text-sm">To verify your email address, we'll send a 6-digit verification code to your email.</p>
+              <p className="text-gray-500 mt-2 mb-4 text-xs sm:text-sm">To verify your email address, we'll send a 6-digit verification code to your email.</p>
 
-              <div className="flex flex-col items-center">
-                <button disabled={isSubmitting} type="submit" className="update-button w-full">
+              <div className="flex flex-col items-center space-y-2 sm:space-y-3">
+                <button disabled={isSubmitting} type="submit" className="update-button w-full text-sm sm:text-base py-2.5 sm:py-3">
                   {isSubmitting ? "Sending..." : "Send Verification Code"}
                 </button>
 
                 <button
                   onClick={setFormMode.bind(this, "view")}
                   type="button"
-                  className="px-6 py-3 rounded-lg font-medium transition-colors text-sm disabled:bg-blue-400 hover:underline cursor-pointer"
+                  className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors text-xs sm:text-sm disabled:bg-blue-400 hover:underline cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -159,10 +159,10 @@ const EmailForm = () => {
 
         {formMode === "verify" && codeSession && (
           <form onSubmit={handleSubmit(verifyEmail)} className="">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-              <div className="flex items-center">
-                <Bell className="text-blue-500 mr-2" size={20} />
-                <p className="text-blue-800 text-sm">Verification code sent to {codeSession.email}</p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-4">
+              <div className="flex items-start sm:items-center">
+                <Bell className="text-blue-500 mr-2 flex-shrink-0 mt-0.5 sm:mt-0" size={18} />
+                <p className="text-blue-800 text-xs sm:text-sm leading-relaxed">Verification code sent to <span className="break-all">{codeSession.email}</span></p>
               </div>
             </div>
 
@@ -179,7 +179,7 @@ const EmailForm = () => {
                 })}
                 className={clsx(
                   errors.code ? "focus:ring-red-500 focus:border-red-500" : "focus:ring-blue-500 focus:border-blue-500",
-                  "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none text-center text-2xl font-mono tracking-widest"
+                  "w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none text-center text-lg sm:text-2xl font-mono tracking-wide sm:tracking-widest"
                 )}
                 placeholder="000000"
                 maxLength="6"
@@ -190,13 +190,13 @@ const EmailForm = () => {
               <button
                 disabled={isSubmitting}
                 type="submit"
-                className="cursor-pointer w-full bg-blue-500 hover:bg-blue-400 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                className="cursor-pointer w-full bg-blue-500 hover:bg-blue-400 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base"
               >
                 {isSubmitting ? "Please Wait..." : "Verify Email"}
               </button>
 
               {/* paragraph with resend button */}
-              <p className="text-gray-500 text-sm">
+              <p className="text-gray-500 text-xs sm:text-sm text-center leading-relaxed">
                 Didn't receive the code?{" "}
                 <button type="button" onClick={onResendCode} className="text-blue-500 hover:underline cursor-pointer">
                   Resend Code
