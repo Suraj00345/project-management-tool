@@ -3,6 +3,7 @@ import { LogOut, User } from "lucide-react";
 import HeaderLogo from "./HeaderLogo";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Link } from "react-router-dom";
+import MobileMenu from "../sidebar/MobileMenu";
 
 const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -16,7 +17,7 @@ const Navbar = () => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-50 sticky top-0 z-10 h-16">
       <div className="w-11/12 lg:w-full lg:px-8 mx-auto">
-        <div className="flex justify-center md:justify-between items-center h-16">
+        <div className="flex justify-between md:justify-between items-center h-16 relative">
           <HeaderLogo />
 
           <div className="hidden md:flex md:items-center space-x-6 lg:space-x-8">
@@ -57,6 +58,8 @@ const Navbar = () => {
               )}
             </div>
           </div>
+
+          <MobileMenu />
         </div>
       </div>
     </header>
