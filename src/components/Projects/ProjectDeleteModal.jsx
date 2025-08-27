@@ -2,6 +2,7 @@ import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { TrashIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { deleteProjectApi } from "../../utils/api-client";
 
 const ProjectDeleteModal = ({ isOpen, setIsOpen, projectId, onDelete }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +16,13 @@ const ProjectDeleteModal = ({ isOpen, setIsOpen, projectId, onDelete }) => {
 
     try {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const res = await deleteProjectApi(projectId);
+      if (!res) throw new Error("Project deletion failed");
+
       toast.success("Project deleted successfully");
+
       setIsOpen(false);
-      onDelete(projectId);
+      onDelete(res);
     } catch (error) {
       toast.error(error.message || "Error deleting project");
     } finally {

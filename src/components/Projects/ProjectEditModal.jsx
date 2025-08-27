@@ -1,20 +1,16 @@
 import { Button, Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "lucide-react";
 import { priority } from "../../utils/data";
 import Loader from "../../Layouts/Loader";
+import { editProjectApi, getSingleProjectDataApi } from "../../utils/api-client";
 
 const ProjectEditModal = ({ projectId, onEdit, isOpen, setIsOpen }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [projectData, setProjectData] = useState({
-    title: null,
-    description: null,
-    priority: null,
-  });
 
   function close() {
     setIsOpen(false);
@@ -27,31 +23,43 @@ const ProjectEditModal = ({ projectId, onEdit, isOpen, setIsOpen }) => {
     setValue,
   } = useForm({
     defaultValues: {
-      title: projectData.title || "",
-      description: projectData.description || "",
-      priority: projectData.priority || priority[0].id,
+      title: "",
+      description: "",
+      priority: priority[0].id,
     },
   });
 
-  useEffect(() => {
-    setIsLoading(false);
-    setProjectData({
-      title: "Sample Project",
-      description: "This is a sample project description.",
-      priority: "high",
-    });
+  const fetchProjectData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const data = await getSingleProjectDataApi(projectId);
 
-    setValue("title", "Sample Project");
-    setValue("description", "This is a sample project description.");
-    setValue("priority", "high");
-  }, [setValue]);
+      setValue("title", data.title);
+      setValue("description", data.description);
+      setValue("priority", data.priority);
+    } catch (error) {
+      toast.error(error.message || "Error fetching project data");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [projectId, setValue]);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchProjectData();
+    }
+  }, [fetchProjectData, isOpen]);
 
   const onSubmit = async (data) => {
     if (isSubmitting) return;
-    try {
-      console.log(projectId, data);
 
-      onEdit();
+    try {
+      const res = await editProjectApi(projectId, data);
+      if (!res._id) throw new Error("Project update failed");
+
+      toast.success("Project updated successfully");
+      onEdit(res);
+      close();
     } catch (error) {
       toast.error(error.message || "Error updating project");
     }
@@ -131,7 +139,7 @@ const ProjectEditModal = ({ projectId, onEdit, isOpen, setIsOpen }) => {
                     type="submit"
                     className="inline-flex items-center gap-2 rounded-md bg-blue-500 px-3 py-1.5 text-sm/6 font-semibold text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-blue-600 data-open:bg-blue-500 cursor-pointer disabled:bg-blue-400"
                   >
-                    Update
+                    {isSubmitting ? "Updating..." : "Update"}
                   </Button>
 
                   <Button

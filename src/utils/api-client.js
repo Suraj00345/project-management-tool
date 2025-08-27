@@ -108,3 +108,69 @@ export const verifyEmailCodeApi = async (sessionId, code) => {
 
     return response.data.data;
 };
+
+
+// Project
+export const createProjectApi = async (title, description, priority) => {
+    const response = await axios.post("/projects/project", { title, description, priority });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Project creation failed");
+    }
+
+    return response.data.data.project;
+}
+
+export const getProjectsApi = async ({
+    limit,
+    sortBy,
+    status,
+    priority,
+}) => {
+    const url = `/projects`
+
+    const queryParams = new URLSearchParams();
+
+    if (limit) queryParams.append("limit", limit);
+    if (sortBy) queryParams.append("sortBy", sortBy);
+    if (status) queryParams.append("status", status);
+    if (priority) queryParams.append("priority", priority);
+
+    const response = await axios.get(url, { params: queryParams });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to fetch projects");
+    }
+
+    return response.data.data;
+}
+
+export const getSingleProjectDataApi = async (projectId) => {
+    const response = await axios.get(`/projects/${projectId}`);
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to fetch project data");
+    }
+
+    return response.data.data.project;
+}
+
+export const editProjectApi = async (projectId, { title, description, priority }) => {
+    const response = await axios.put(`/projects/${projectId}`, { title, description, priority });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Project update failed");
+    }
+
+    return response.data.data.project;
+}
+
+export const deleteProjectApi = async (projectId) => {
+    const response = await axios.delete(`/projects/${projectId}`);
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Project deletion failed");
+    }
+
+    return response.data.data.projectId;
+}

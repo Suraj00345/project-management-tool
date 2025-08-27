@@ -1,15 +1,12 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { priority } from "../../utils/data";
 import clsx from "clsx";
+import toast from "react-hot-toast";
+import { createProjectApi } from "../../utils/api-client";
 
-const CreateProject = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const open = () => {
-    setIsOpen(true);
-  };
+const CreateProject = ({ onCreate, isOpen, setIsOpen }) => {
+  // const [isOpen, setIsOpen] = useState(false);
 
   const close = () => {
     setIsOpen(false);
@@ -28,19 +25,21 @@ const CreateProject = () => {
 
   const onSubmit = async (data) => {
     if (isSubmitting) return;
-    console.log(data);
-    reset();
+    try {
+      const project = await createProjectApi(data.title, data.description, data.priority);
+
+      if (!project._id) throw new Error("Project creation failed");
+      onCreate(project);
+      toast.success("Project created successfully");
+      reset();
+      close();
+    } catch (error) {
+      toast.error(error.message || "Failed to create project");
+    }
   };
 
   return (
     <>
-      <button
-        onClick={open}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 lg:py-3 lg:px-4 rounded-md cursor-pointer transition duration-200 flex items-center gap-2"
-      >
-        <span className="text-sm">Create New Project</span>
-      </button>
-
       <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto backdrop-blur-sm">
           <div className="flex min-h-full items-center justify-center p-4 ">
