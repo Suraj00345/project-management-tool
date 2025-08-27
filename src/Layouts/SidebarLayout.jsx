@@ -6,7 +6,7 @@ const SidebarLayout = ({ children }) => {
   return (
     <div className="flex h-[calc(100vh-4rem)]">
       <DashboardSidebar />
-      <div className="flex-1">{children ? children : <Outlet />}</div>
+      <div className="flex-1 h-full max-h-full overflow-auto no-scrollbar">{children ? children : <Outlet />}</div>
     </div>
   );
 };

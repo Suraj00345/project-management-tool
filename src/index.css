@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+* {
+  scroll-behavior: smooth;
+}
+
 @layer components {
   .auth-input {
     @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors placeholder:text-sm placeholder:text-gray-400;
@@ -12,4 +16,17 @@
   .update-button {
     @apply bg-blue-600 cursor-pointer hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-medium transition-colors w-40 text-sm disabled:bg-blue-400;
   }
+}
+
+@theme {
+  --max-width-screen-2xl: 1536px;
+}
+
+/* hidescrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
 }

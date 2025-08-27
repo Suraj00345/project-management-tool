@@ -69,7 +69,7 @@ const ProfileForm = ({ setActiveTab }) => {
         <div>
           <div className="flex justify-between items-center gap-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-            <button className="flex items-center gap-1 text-sm text-green-500 cursor-pointer" onClick={() => setActiveTab("EMAIL")}>
+            <button type="button" className="flex items-center gap-1 text-sm text-green-500 cursor-pointer" onClick={() => setActiveTab("EMAIL")}>
               <Edit className="text-green-500 ml-2 " size={16} />
               Edit Email
             </button>
