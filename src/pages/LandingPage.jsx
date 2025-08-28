@@ -128,7 +128,9 @@ export default function OrganivoHomepage() {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
               Organize Your Business
-              <span className="text-blue-500 block mt-5">Like Never Before</span>
+              <span className="text-blue-500 block mt-5">
+                Like Never Before
+              </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Streamline your workflow, boost productivity, and grow your
