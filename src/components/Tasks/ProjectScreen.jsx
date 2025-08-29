@@ -1,24 +1,72 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import List from "./List";
 import AddListForm from "./AddListForm";
-import { Plus } from "lucide-react";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import Card from "./Card";
+import { reOrderListApi, reOrderTasksApi } from "../../utils/api-client";
+import { useParams } from "react-router-dom";
+import { useDebounce } from "@uidotdev/usehooks";
+import toast from "react-hot-toast";
+
+let allowReorder = false;
 
 const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
-  const [isAddingList, setIsAddingList] = useState(false);
-  const listIds = useMemo(() => lists.map((list) => list._id), [lists]);
-
   const [activeList, setActiveList] = useState();
   const [activeCard, setActiveCard] = useState();
+  const { projectId } = useParams();
+  const listIds = useMemo(() => lists.map((list) => list._id), [lists]);
+  const debouncedTasks = useDebounce(tasks, 1000);
+
+  useEffect(() => {
+    if (!allowReorder) {
+      return;
+    }
+
+    const tasksByList = Object.entries(
+      debouncedTasks.reduce((acc, task) => {
+        const { listId } = task;
+        if (!acc[listId]) {
+          acc[listId] = { listId, tasks: [] };
+        }
+
+        acc[listId].tasks.push({
+          _id: task._id,
+          order: acc[listId].tasks.length + 1,
+          listId: task.listId,
+        });
+
+        return acc;
+      }, {})
+    ).map(([, value]) => value);
+
+    const orderedTasks = tasksByList.flatMap(({ tasks }) =>
+      tasks.map((task) => ({
+        ...task,
+        order: task.order,
+      }))
+    );
+
+    reOrderTasksApi(projectId, orderedTasks)
+      .then(() => {})
+      .catch(() => {
+        toast.error("Error reordering tasks");
+      })
+      .finally(() => {
+        allowReorder = false;
+      });
+
+    // console.log(orderedTasks);
+  }, [debouncedTasks, projectId]);
 
   // List Management Functions
   const listAddHandler = (list) => {
-    setIsAddingList(false);
-    list.cards = [];
     setLists([...lists, list]);
+  };
+
+  const updateListHandler = (updatedList) => {
+    setLists((prevLists) => prevLists.map((list) => (list._id === updatedList._id ? updatedList : list)));
   };
 
   const deleteListHandler = (listId) => {
@@ -26,19 +74,18 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
     setLists(newList);
   };
 
-  // Card Management Functions
-  const addCard = (listId, newCard) => {
-    const targetedList = lists.find((list) => list._id === listId);
-
-    // if targetedList does not have cards prop then add an empty array
-    if (!targetedList.cards) {
-      targetedList.cards = [];
+  const reorderListHandler = async (newOrder) => {
+    try {
+      const ids = newOrder.map((list) => list._id);
+      await reOrderListApi(projectId, ids);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    // Add the new card to the targeted list
-    targetedList.cards.push(newCard);
-
-    setLists([...lists]);
+  // Card Management Functions
+  const addTaskHandler = (newTask) => {
+    setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
   const deleteCard = (listId, cardId) => {
@@ -84,6 +131,8 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
       const activeColIndex = lists.findIndex((list) => list._id === activeId);
       const overColIndex = lists.findIndex((list) => list._id === overId);
       const newListOrder = arrayMove(lists, activeColIndex, overColIndex);
+      reorderListHandler(newListOrder);
+
       return newListOrder;
     });
 
@@ -114,7 +163,9 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
         const overIndex = tasks.findIndex((task) => task._id === overId);
         tasks[activeIndex].listId = tasks[overIndex].listId;
 
-        return arrayMove(tasks, activeIndex, overIndex);
+        const newOrder = arrayMove(tasks, activeIndex, overIndex);
+
+        return newOrder;
       });
     }
 
@@ -126,9 +177,14 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
 
         tasks[activeIndex].listId = overId;
 
-        return arrayMove(tasks, activeIndex, activeIndex);
+        const newOrder = arrayMove(tasks, activeIndex, activeIndex);
+
+        return newOrder;
       });
     }
+
+    console.log("Drag Over", { activeId, overId, isActiveTask, isOverTask, isOverList });
+    allowReorder = true;
   };
 
   return (
@@ -139,32 +195,34 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
             {lists.map((list) => (
               <List
                 key={list._id}
+                // List
                 list={list}
                 tasks={tasks.filter((task) => task.listId === list._id)}
                 onDeleteList={deleteListHandler}
-                onAddCard={addCard}
+                onEditList={updateListHandler}
+                // Card
+                onAddCard={addTaskHandler}
                 onDeleteCard={deleteCard}
                 onUpdateCard={updateCard}
               />
             ))}
           </SortableContext>
 
-          {isAddingList ? (
-            <AddListForm count={lists.length} onAdd={listAddHandler} onCancel={() => setIsAddingList(false)} />
-          ) : (
-            <button
-              onClick={() => setIsAddingList(true)}
-              className="cursor-pointer h-16 bg-gray-300 text-black rounded-lg p-4 w-72 flex-shrink-0 flex items-center justify-center gap-2 hover:bg-gray-300/80 transition-all"
-            >
-              <Plus size={20} />
-              Add another list
-            </button>
-          )}
+          <AddListForm onAdd={listAddHandler} count={lists.length} />
         </div>
 
         {createPortal(
           <DragOverlay className="">
-            {activeList ? <List list={activeList} /> : null}
+            {activeList ? (
+              <List
+                list={activeList}
+                tasks={tasks.filter((task) => task.listId === activeList._id)}
+                onDeleteList={() => {}}
+                onAddCard={() => {}}
+                onDeleteCard={() => {}}
+                onUpdateCard={() => {}}
+              />
+            ) : null}
             {activeCard ? <Card card={activeCard} /> : null}
           </DragOverlay>,
           document.body

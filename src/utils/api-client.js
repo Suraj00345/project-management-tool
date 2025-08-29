@@ -196,6 +196,36 @@ export const createListApi = async (projectId, title) => {
     return response.data.data.list;
 }
 
+export const deleteListApi = async (projectId, listId) => {
+    const response = await axios.delete(`/projects/${projectId}/list/${listId}`);
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "List deletion failed");
+    }
+
+    return response.data.data.listId;
+}
+
+export const updateListApi = async (projectId, listId, title) => {
+    const response = await axios.put(`/projects/${projectId}/list/${listId}`, { title });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "List update failed");
+    }
+
+    return response.data.data.list;
+}
+
+export const reOrderListApi = async (projectId, listIds) => {
+    const response = await axios.patch(`/projects/${projectId}/list`, { listIds });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "List reordering failed");
+    }
+
+    return response.data.data.lists;
+}
+
 // Task
 export const createTaskApi = async (projectId, listId, {
     title, description, order
@@ -212,4 +242,13 @@ export const createTaskApi = async (projectId, listId, {
     }
 
     return response.data.data.task;
+}
+export const reOrderTasksApi = async (projectId, taskIds) => {
+    const response = await axios.patch(`/projects/${projectId}/tasks`, { tasks: taskIds });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Task reordering failed");
+    }
+
+    return response.data.data.tasks;
 }
