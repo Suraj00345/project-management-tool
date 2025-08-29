@@ -227,9 +227,7 @@ export const reOrderListApi = async (projectId, listIds) => {
 }
 
 // Task
-export const createTaskApi = async (projectId, listId, {
-    title, description, order
-}) => {
+export const createTaskApi = async (projectId, listId, { title, description, order }) => {
     const response = await axios.post(`/projects/${projectId}/task`, {
         title,
         description,
@@ -251,4 +249,25 @@ export const reOrderTasksApi = async (projectId, taskIds) => {
     }
 
     return response.data.data.tasks;
+}
+
+
+export const updateTaskApi = async (projectId, taskId, { title, description }) => {
+    const response = await axios.patch(`/projects/${projectId}/task/${taskId}`, { title, description });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Task update failed");
+    }
+
+    return response.data.data.task;
+}
+
+export const deleteTaskApi = async (taskId) => {
+    const response = await axios.delete(`/projects/task/${taskId}`);
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Task deletion failed");
+    }
+
+    return response.data.data.taskId;
 }

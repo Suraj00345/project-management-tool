@@ -1,12 +1,9 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { createTaskApi } from "../../utils/api-client";
+import { updateTaskApi } from "../../utils/api-client";
 import { useParams } from "react-router-dom";
-import useOpen from "../../hooks/useOpen";
-import { Plus } from "lucide-react";
 
-const AddCardForm = ({ listId, onAdd, order }) => {
-  const { isOpen, open, close } = useOpen();
+const EditCardForm = ({ task, onUpdate, onClose }) => {
   const { projectId } = useParams();
 
   const {
@@ -14,32 +11,33 @@ const AddCardForm = ({ listId, onAdd, order }) => {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: task.title || "",
+      description: task.description || "",
+    },
+  });
 
   const onSubmit = async (data) => {
     if (isSubmitting) return;
+
     try {
-      const task = await createTaskApi(projectId, listId, { ...data, order: order });
-      onAdd(task);
-      toast.success("Task added successfully!");
-      reset();
-      close();
+      const _task = await updateTaskApi(projectId, task._id, {
+        title: data.title,
+        description: data.description,
+      });
+
+      onUpdate(_task);
+
+      toast.success("Task updated successfully!");
     } catch (error) {
-      toast.error(error.message || "Failed to add task. Please try again.");
+      console.log(error);
+      toast.error(error.message || "Failed to update task. Please try again.");
+      reset();
+    } finally {
+      onClose();
     }
   };
-
-  if (!isOpen) {
-    return (
-      <button
-        onClick={open}
-        className="cursor-pointer w-full flex items-center justify-center gap-2 p-3 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors border-2 border-dashed border-gray-300 hover:border-gray-400"
-      >
-        <Plus size={16} />
-        Add a Task
-      </button>
-    );
-  }
 
   return (
     <form className="bg-white p-3 rounded-lg shadow-sm border border-gray-200 " onSubmit={handleSubmit(onSubmit)}>
@@ -72,10 +70,19 @@ const AddCardForm = ({ listId, onAdd, order }) => {
       </div>
 
       <div className="flex gap-2 mt-4">
-        <button type="submit" className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors">
-          Add Task
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="bg-blue-500 cursor-pointer  text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors"
+        >
+          {isSubmitting ? "Updating..." : "Update"}
         </button>
-        <button type="button" onClick={close} className="bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400 transition-colors">
+
+        <button
+          type="button"
+          onClick={onClose}
+          className=" cursor-pointer bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400 transition-colors"
+        >
           Cancel
         </button>
       </div>
@@ -83,4 +90,4 @@ const AddCardForm = ({ listId, onAdd, order }) => {
   );
 };
 
-export default AddCardForm;
+export default EditCardForm;

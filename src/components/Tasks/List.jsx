@@ -59,7 +59,7 @@ const List = ({
       <SortableContext items={taskIds}>
         <div className="flex flex-col gap-3 mb-4">
           {tasks?.map((card, index) => (
-            <Card key={card._id} card={card} listId={card.listId} onDelete={onDeleteCard} onUpdate={onUpdateCard} index={index} />
+            <Card key={card._id} card={card} onDelete={onDeleteCard} onUpdate={onUpdateCard} index={index} />
           ))}
         </div>
 

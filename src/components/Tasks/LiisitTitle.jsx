@@ -11,6 +11,7 @@ const ListTitle = ({ list, onEdit }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateHandler = async () => {
+    close();
     if (isSubmitting) return;
 
     if (value.trim() === "") {
@@ -32,7 +33,6 @@ const ListTitle = ({ list, onEdit }) => {
     } catch (error) {
       toast.error(error.message || "Error updating list");
       setValue(list.title);
-      close();
     } finally {
       setIsSubmitting(false);
     }
@@ -41,14 +41,23 @@ const ListTitle = ({ list, onEdit }) => {
   if (isOpen) {
     return (
       <div className="font-semibold text-gray-800 text-base flex-1">
-        <input disabled={isSubmitting} type="text" onChange={(e) => setValue(e.target.value)} value={value} autoFocus onBlur={updateHandler} />
+        <input
+          disabled={isSubmitting}
+          type="text"
+          className="rounded-md p-1 w-full outline-none border border-gray-300 focus:ring-2 focus:ring-blue-400 
+          "
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          autoFocus
+          onBlur={updateHandler}
+        />
       </div>
     );
   }
 
   return (
     <>
-      <h3 onClick={open} title={list.title} className="font-semibold text-gray-800 text-base flex-1 truncate">
+      <h3 onClick={open} title={list.title} className="cursor-text font-semibold p-1.5 text-gray-800 text-base flex-1 truncate">
         {list.title}
       </h3>
     </>

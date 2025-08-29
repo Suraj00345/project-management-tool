@@ -56,8 +56,6 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
       .finally(() => {
         allowReorder = false;
       });
-
-    // console.log(orderedTasks);
   }, [debouncedTasks, projectId]);
 
   // List Management Functions
@@ -79,7 +77,7 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
       const ids = newOrder.map((list) => list._id);
       await reOrderListApi(projectId, ids);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message || "Error reordering lists");
     }
   };
 
@@ -88,21 +86,12 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
-  const deleteCard = (listId, cardId) => {
-    setLists(lists.map((list) => (list.id === listId ? { ...list, cards: list.cards.filter((card) => card.id !== cardId) } : list)));
+  const deleteCard = (cardId) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task._id !== cardId));
   };
 
-  const updateCard = (listId, cardId, updatedCard) => {
-    setLists(
-      lists.map((list) =>
-        list.id === listId
-          ? {
-              ...list,
-              cards: list.cards.map((card) => (card.id === cardId ? { ...card, ...updatedCard } : card)),
-            }
-          : list
-      )
-    );
+  const updateCard = (updatedCard) => {
+    setTasks((prevTasks) => prevTasks.map((task) => (task._id === updatedCard._id ? updatedCard : task)));
   };
 
   const onDragStart = (event) => {
@@ -183,7 +172,6 @@ const ProjectScreen = ({ lists, setLists, tasks, setTasks }) => {
       });
     }
 
-    console.log("Drag Over", { activeId, overId, isActiveTask, isOverTask, isOverList });
     allowReorder = true;
   };
 
