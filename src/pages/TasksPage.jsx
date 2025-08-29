@@ -7,51 +7,29 @@ import { getProjectDetailsApi } from "../utils/api-client";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Layouts/Loader";
 
-const listData = [
-  {
-    id: "1",
-    title: "To Do",
-    cards: [
-      {
-        id: "1",
-        title: "Plan project structure",
-        description: "Create initial wireframes and architecture",
-      },
-      {
-        id: "2",
-        title: "Setup development environment",
-        description: "Install dependencies and configure tools",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "In Progress",
-    cards: [
-      {
-        id: "3",
-        title: "Design UI components",
-        description: "Create reusable components for the application",
-      },
-    ],
-  },
-  {
-    id: "3",
-    title: "Done",
-    cards: [
-      {
-        id: "4",
-        title: "Initial research",
-        description: "Research technologies and best practices",
-      },
-    ],
-  },
-];
+// const listData = [
+//   {
+//     _id: "1",
+//     title: "To Do",
+//     cards: [
+//       {
+//         id: "1",
+//         title: "Plan project structure",
+//         description: "Create initial wireframes and architecture",
+//       },
+//       {
+//         id: "2",
+//         title: "Setup development environment",
+//         description: "Install dependencies and configure tools",
+//       },
+//     ],
+//   },
+// ];
 
 const TaskPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [project, setProject] = useState(null);
-  const [lists, setLists] = useState(listData);
+  const [lists, setLists] = useState([]);
   const [draggedCard, setDraggedCard] = useState(null);
   const [draggedOver, setDraggedOver] = useState(null);
 
@@ -65,6 +43,9 @@ const TaskPage = () => {
     try {
       const projectData = await getProjectDetailsApi(projectId);
       setProject(projectData.project);
+      if (projectData.lists?.length > 0) {
+        setLists(projectData.lists);
+      }
 
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
@@ -90,7 +71,10 @@ const TaskPage = () => {
   };
 
   const deleteList = (listId) => {
-    setLists(lists.filter((list) => list.id !== listId));
+    console.log(listId);
+    const newList = lists.filter((list) => list._id !== listId);
+    setLists(newList);
+    // setLists(lists.filter((list) => list.id !== listId));
   };
 
   // Card Management Functions
@@ -169,7 +153,7 @@ const TaskPage = () => {
         <div className="flex gap-6 p-6  w-full overflow-x-auto flex-1">
           {lists.map((list) => (
             <List
-              key={list.id}
+              key={list._id}
               list={list}
               onDeleteList={deleteList}
               onAddCard={addCard}

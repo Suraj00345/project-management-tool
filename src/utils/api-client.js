@@ -186,8 +186,8 @@ export const getProjectDetailsApi = async (projectId) => {
 }
 
 // List
-export const createListApi = async (projectId, title, description, order) => {
-    const response = await axios.post(`/projects/${projectId}/list`, { title, description, order });
+export const createListApi = async (projectId, title) => {
+    const response = await axios.post(`/projects/${projectId}/list`, { title });
 
     if (!response.data.success) {
         throw new Error(response.data.message || "List creation failed");

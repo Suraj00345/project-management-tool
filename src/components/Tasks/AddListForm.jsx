@@ -37,15 +37,6 @@ const AddListForm = ({ onAdd, onCancel, count }) => {
         {errors.title && <span className="text-red-500">{errors.title.message}</span>}
       </div>
 
-      <div className="mt-2">
-        <textarea
-          placeholder="Enter list description..."
-          {...register("description")}
-          className="w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 max-h-36"
-        />
-        {errors.description && <span className="text-red-500">{errors.description.message}</span>}
-      </div>
-
       <div className="flex gap-2 mt-4">
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors cursor-pointer">
           Add List
