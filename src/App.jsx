@@ -26,6 +26,7 @@ function App() {
                 <Route path="/my-account" element={<UpdateProfile />} />
                 <Route path="/projects" element={<ProjectsPage />} />
               </Route>
+
               <Route path="/projects/:projectId" element={<TasksPage />} />
             </Route>
           </Route>

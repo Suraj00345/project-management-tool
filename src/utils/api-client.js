@@ -174,3 +174,24 @@ export const deleteProjectApi = async (projectId) => {
 
     return response.data.data.projectId;
 }
+
+export const getProjectDetailsApi = async (projectId) => {
+    const response = await axios.get(`/projects/${projectId}/data`);
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to fetch project details");
+    }
+
+    return response.data.data;
+}
+
+// List
+export const createListApi = async (projectId, title, description, order) => {
+    const response = await axios.post(`/projects/${projectId}/list`, { title, description, order });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "List creation failed");
+    }
+
+    return response.data.data.list;
+}

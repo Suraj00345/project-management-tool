@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import BoardHeader from "../components/Tasks/BoardHeader";
 import List from "../components/Tasks/List";
 import AddListForm from "../components/Tasks/AddListForm";
+import { getProjectDetailsApi } from "../utils/api-client";
+import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../Layouts/Loader";
 
 const listData = [
   {
@@ -46,19 +49,43 @@ const listData = [
 ];
 
 const TaskPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [project, setProject] = useState(null);
   const [lists, setLists] = useState(listData);
-
   const [draggedCard, setDraggedCard] = useState(null);
   const [draggedOver, setDraggedOver] = useState(null);
+
   const [isAddingList, setIsAddingList] = useState(false);
+
+  const { projectId } = useParams();
+  const navigate = useNavigate();
+
+  const getProject = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const projectData = await getProjectDetailsApi(projectId);
+      setProject(projectData.project);
+
+      // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      navigate("/404");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [projectId, navigate]);
+
+  useEffect(() => {
+    getProject();
+  }, [getProject]);
 
   // List Management Functions
   const addList = (title) => {
     const newList = {
       id: Date.now().toString(),
-      title: title,
+      title: title.title,
       cards: [],
     };
+
     setLists([...lists, newList]);
   };
 
@@ -68,21 +95,11 @@ const TaskPage = () => {
 
   // Card Management Functions
   const addCard = (listId, newCard) => {
-    setLists(
-      lists.map((list) =>
-        list.id === listId ? { ...list, cards: [...list.cards, newCard] } : list
-      )
-    );
+    setLists(lists.map((list) => (list.id === listId ? { ...list, cards: [...list.cards, newCard] } : list)));
   };
 
   const deleteCard = (listId, cardId) => {
-    setLists(
-      lists.map((list) =>
-        list.id === listId
-          ? { ...list, cards: list.cards.filter((card) => card.id !== cardId) }
-          : list
-      )
-    );
+    setLists(lists.map((list) => (list.id === listId ? { ...list, cards: list.cards.filter((card) => card.id !== cardId) } : list)));
   };
 
   const updateCard = (listId, cardId, updatedCard) => {
@@ -91,9 +108,7 @@ const TaskPage = () => {
         list.id === listId
           ? {
               ...list,
-              cards: list.cards.map((card) =>
-                card.id === cardId ? { ...card, ...updatedCard } : card
-              ),
+              cards: list.cards.map((card) => (card.id === cardId ? { ...card, ...updatedCard } : card)),
             }
           : list
       )
@@ -125,9 +140,7 @@ const TaskPage = () => {
           if (list.id === draggedCard.sourceListId) {
             return {
               ...list,
-              cards: list.cards.filter(
-                (card) => card.id !== draggedCard.card.id
-              ),
+              cards: list.cards.filter((card) => card.id !== draggedCard.card.id),
             };
           }
           if (list.id === targetListId) {
@@ -142,14 +155,18 @@ const TaskPage = () => {
     setDraggedOver(null);
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <div className=" bg-gray-200 overflow-x-auto h-screen">
-      <div className="flex flex-col h-full min-w-max">
+    <div className="bg-gray-200 h-full">
+      <div className="flex flex-col h-full w-full ">
         <div className="p-6 pb-0">
-          {/* enter project name here */}
-          <BoardHeader Name={"Project Name"} />
+          <BoardHeader Name={project?.title} />
         </div>
-        <div className="flex gap-6 p-6 pt-0">
+
+        <div className="flex gap-6 p-6  w-full overflow-x-auto flex-1">
           {lists.map((list) => (
             <List
               key={list.id}
@@ -168,10 +185,7 @@ const TaskPage = () => {
 
           {/* Add New List Section */}
           {isAddingList ? (
-            <AddListForm
-              onAdd={addList}
-              onCancel={() => setIsAddingList(false)}
-            />
+            <AddListForm count={lists.length} onAdd={addList} onCancel={() => setIsAddingList(false)} />
           ) : (
             <button
               onClick={() => setIsAddingList(true)}
