@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { updatePasswordApi } from "../../utils/api-client";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 function EyeButton({ showPassword, setShowPassword }) {
   return (
@@ -43,6 +44,11 @@ const PasswordForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
+      <Helmet>
+        <title>Update Password | My Account</title>
+        <meta name="description" content="Manage your account settings and preferences." />
+      </Helmet>
+
       <div className="flex items-center mb-6">
         <Lock className="text-blue-500 mr-3" size={24} />
         <h2 className="text-2xl font-bold text-gray-900">Change Password</h2>

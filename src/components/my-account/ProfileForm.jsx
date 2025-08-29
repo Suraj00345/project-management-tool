@@ -4,6 +4,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import { updateProfileApi } from "../../utils/api-client";
+import { Helmet } from "react-helmet";
 
 const ProfileForm = ({ setActiveTab }) => {
   const user = useAuthStore((state) => state.user);
@@ -34,6 +35,11 @@ const ProfileForm = ({ setActiveTab }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
+      <Helmet>
+        <title>{user.firstName.toUpperCase() + " " + user.lastName.toUpperCase()} | My Account</title>
+        <meta name="description" content="Manage your account settings and preferences." />
+      </Helmet>
+
       <div className="flex items-center mb-6">
         <User className="text-blue-500 mr-3" size={24} />
         <h2 className="text-2xl font-bold text-gray-900">Profile Information</h2>

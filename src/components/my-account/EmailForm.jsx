@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { resendVerificationMailAPi, updateEmailApi, verifyEmailCodeApi } from "../../utils/api-client";
+import { Helmet } from "react-helmet";
 
 const EmailForm = () => {
   const user = useAuthStore((state) => state.user);
@@ -84,7 +85,11 @@ const EmailForm = () => {
   };
 
   return (
-   <div className="p-4 sm:p-6 md:p-8 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
+      <Helmet>
+        <title>Email Verification | My Account</title>
+        <meta name="description" content="Manage your account settings and preferences." />
+      </Helmet>
       <div className="flex items-center mb-4 sm:mb-6">
         <Mail className="text-blue-500 mr-2 sm:mr-3 flex-shrink-0" size={20} />
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Email Verification</h2>
@@ -113,7 +118,9 @@ const EmailForm = () => {
 
             <button
               onClick={() => setFormMode("edit")}
-              className={clsx("cursor-pointer w-full px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base")}
+              className={clsx(
+                "cursor-pointer w-full px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base"
+              )}
             >
               Edit Email Address
             </button>
@@ -138,7 +145,9 @@ const EmailForm = () => {
             </div>
 
             <div className="">
-              <p className="text-gray-500 mt-2 mb-4 text-xs sm:text-sm">To verify your email address, we'll send a 6-digit verification code to your email.</p>
+              <p className="text-gray-500 mt-2 mb-4 text-xs sm:text-sm">
+                To verify your email address, we'll send a 6-digit verification code to your email.
+              </p>
 
               <div className="flex flex-col items-center space-y-2 sm:space-y-3">
                 <button disabled={isSubmitting} type="submit" className="update-button w-full text-sm sm:text-base py-2.5 sm:py-3">
@@ -162,7 +171,9 @@ const EmailForm = () => {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-4">
               <div className="flex items-start sm:items-center">
                 <Bell className="text-blue-500 mr-2 flex-shrink-0 mt-0.5 sm:mt-0" size={18} />
-                <p className="text-blue-800 text-xs sm:text-sm leading-relaxed">Verification code sent to <span className="break-all">{codeSession.email}</span></p>
+                <p className="text-blue-800 text-xs sm:text-sm leading-relaxed">
+                  Verification code sent to <span className="break-all">{codeSession.email}</span>
+                </p>
               </div>
             </div>
 

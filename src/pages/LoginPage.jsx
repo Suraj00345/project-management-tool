@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { loginApi } from "../utils/api-client";
 import { useAuthStore } from "../store/useAuthStore";
 import SubmitButton from "../components/Auth/SubmitButton";
+import { Helmet } from "react-helmet";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -39,6 +40,10 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 flex items-center justify-center">
+      <Helmet>
+        <title>Login | Organivo</title>
+        <meta name="description" content="Login to your Organivo account." />
+      </Helmet>
       <FloatingElements />
 
       <section className="w-full">

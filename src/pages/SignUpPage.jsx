@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import FloatingElements from "../components/Auth/FloatingElements";
 import SignUpForm from "../components/Auth/SignUpForm";
 import VerificationForm from "../components/Auth/verificationForm";
@@ -8,6 +9,10 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 flex items-center justify-center">
+      <Helmet>
+        <title>Sign Up | Organivo</title>
+        <meta name="description" content="Create your Organivo account." />
+      </Helmet>
       <FloatingElements />
 
       {/* Main SignUp page start from here*/}

@@ -1,6 +1,7 @@
 import { Clock } from "lucide-react";
 import ProjectCardDropdown from "./ProjectCardDropdown";
 import { useNavigate } from "react-router-dom";
+import PriorityBadge from "./PriorityBadge";
 
 const ProjectCard = ({ project, onEdit, onArchive, onDelete }) => {
   const navigate = useNavigate();
@@ -13,9 +14,11 @@ const ProjectCard = ({ project, onEdit, onArchive, onDelete }) => {
     <div className="border border-gray-50 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-200 cursor-pointer relative">
       <ProjectCardDropdown projectId={project._id} onEdit={onEdit} onArchive={onArchive} onDelete={onDelete} />
 
+      {project.priority && project.priority !== "default" && <PriorityBadge priority={project.priority} />}
+
       <div
         onClick={onNavigate}
-        className="bg-gradient-to-br rounded-b-lg from-purple-500 to-blue-500 min-h-28 flex items-center justify-center px-4 py-8 "
+        className="bg-gradient-to-br rounded-b-lg from-purple-500 to-blue-500 min-h-32 sm:min-h-36 flex items-center justify-center px-4 py-8 "
       >
         <h3 className="text-lg text-white font-semibold wrap-anywhere">{project.title}</h3>
       </div>

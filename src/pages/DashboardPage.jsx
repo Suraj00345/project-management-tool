@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "../components/DashboardComponents/box";
 import ProjectBox from "../components/DashboardComponents/ProjectBox";
+import { Helmet } from "react-helmet";
 
 const data = [
   { num: 10, type: "Total Projects" },
@@ -19,9 +20,12 @@ const ProjectBoxdata = [
 const DashboardPage = () => {
   return (
     <div className="ml-4 sm:ml-6 md:ml-8 lg:ml-10 mt-5 mr-4 sm:mr-6 md:mr-8 lg:mr-10">
-      <h1 className="text-xl sm:text-2xl font-semibold">
-        Welcome Back Suraj Kumar,
-      </h1>
+      <Helmet>
+        <title>Dashboard | Organivo</title>
+        <meta name="description" content="Manage your account settings and preferences." />
+      </Helmet>
+
+      <h1 className="text-xl sm:text-2xl font-semibold">Welcome Back Suraj Kumar,</h1>
 
       {/* box */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-10 mt-6">
@@ -31,9 +35,7 @@ const DashboardPage = () => {
       </div>
 
       {/* recent projects */}
-      <h1 className="text-xl sm:text-2xl font-medium pt-12 sm:pt-16 md:pt-20 pb-4 sm:pb-6 md:pb-7">
-        Recent Projects
-      </h1>
+      <h1 className="text-xl sm:text-2xl font-medium pt-12 sm:pt-16 md:pt-20 pb-4 sm:pb-6 md:pb-7">Recent Projects</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 sm:gap-4 md:gap-5 lg:gap-6">
         {ProjectBoxdata.map((data, index) => (
           <ProjectBox key={index} ProjectName={data.name} Time={data.Time} />

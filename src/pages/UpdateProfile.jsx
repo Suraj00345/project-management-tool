@@ -6,6 +6,7 @@ import SideBar from "../components/my-account/SideBar";
 import ProfileForm from "../components/my-account/ProfileForm";
 import PasswordForm from "../components/my-account/PasswordForm";
 import EmailForm from "../components/my-account/EmailForm";
+import { Helmet } from "react-helmet";
 
 const tabs = [
   { id: "PROFILE", label: "Profile Info", icon: User },
@@ -18,6 +19,11 @@ export default function OrganivoProfile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>My Account</title>
+        <meta name="description" content="Manage your account settings and preferences." />
+      </Helmet>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <PageHeading />
 
