@@ -1,13 +1,30 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MoreVertical, Edit3, Trash2 } from "lucide-react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
+const Card = ({ card, listId, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [editData, setEditData] = useState({
     title: card.title,
     description: card.description,
   });
+
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
+    id: card._id,
+
+    data: {
+      type: "Task",
+      task: card,
+    },
+  });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString({ ...transform, scaleX: 1, scaleY: 1 }),
+  };
+
   const dropdownRef = useRef(null);
 
   const handleSave = () => {
@@ -66,6 +83,7 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
           rows={2}
           placeholder="Enter description (optional)..."
         />
+
         <div className="flex gap-2">
           <button onClick={handleSave} className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors">
             Update
@@ -80,9 +98,13 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
 
   return (
     <div
-      draggable
-      onDragStart={(e) => onDragStart(e, card, listId)}
-      className="bg-white p-3 rounded-lg shadow-sm border border-gray-200 cursor-move hover:shadow-md transition-shadow group relative"
+      style={style}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      className={`bg-white p-3 rounded-lg shadow-sm border border-gray-200  hover:shadow-md transition-shadow group relative ${
+        isDragging ? "opacity-50" : ""
+      }`}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
@@ -107,6 +129,7 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
                 <Edit3 size={14} />
                 Edit
               </button>
+
               <button onClick={handleDelete} className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2">
                 <Trash2 size={14} />
                 Delete
