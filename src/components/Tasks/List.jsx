@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Card from "./Card";
 import AddCardForm from "./AddCardForm";
 import { Maximize2, Minimize2, Plus, Trash2 } from "lucide-react";
@@ -77,22 +77,15 @@ const List = ({ list, onDeleteList, onAddCard, onDeleteCard, onUpdateCard, onDra
       </div>
 
       {/* Cards Container - Dynamic Height */}
-      {/* <div className="space-y-3 mb-4">
-        {list.cards.map((card) => (
-          <Card
-            key={card.id}
-            card={card}
-            listId={list.id}
-            onDelete={onDeleteCard}
-            onUpdate={onUpdateCard}
-            onDragStart={onDragStart}
-          />
+      <div className="space-y-3 mb-4">
+        {list?.cards?.map((card) => (
+          <Card key={card._id} card={card} listId={list._id} onDelete={onDeleteCard} onUpdate={onUpdateCard} onDragStart={onDragStart} />
         ))}
-      </div> */}
+      </div>
 
       {/* Add Card Section */}
       {isAddingCard ? (
-        <AddCardForm listId={list._id} onAdd={handleAddCard} onCancel={() => setIsAddingCard(false)} />
+        <AddCardForm listId={list._id} onAdd={handleAddCard} onCancel={() => setIsAddingCard(false)} order={list.cards.length + 1} />
       ) : (
         <button
           onClick={() => setIsAddingCard(true)}

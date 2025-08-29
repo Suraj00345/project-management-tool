@@ -12,7 +12,7 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
 
   const handleSave = () => {
     if (editData.title.trim()) {
-      onUpdate(listId, card.id, editData);
+      onUpdate(listId, card._id, editData);
       setIsEditing(false);
     }
   };
@@ -28,7 +28,7 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
   };
 
   const handleDelete = () => {
-    onDelete(listId, card.id);
+    onDelete(listId, card._id);
     setShowDropdown(false);
   };
 
@@ -61,24 +61,16 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
         />
         <textarea
           value={editData.description}
-          onChange={(e) =>
-            setEditData({ ...editData, description: e.target.value })
-          }
+          onChange={(e) => setEditData({ ...editData, description: e.target.value })}
           className="w-full p-2 border border-gray-200 rounded mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
           rows={2}
           placeholder="Enter description (optional)..."
         />
         <div className="flex gap-2">
-          <button
-            onClick={handleSave}
-            className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors"
-          >
+          <button onClick={handleSave} className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors">
             Update
           </button>
-          <button
-            onClick={handleCancel}
-            className="bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400 transition-colors"
-          >
+          <button onClick={handleCancel} className="bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400 transition-colors">
             Cancel
           </button>
         </div>
@@ -95,10 +87,9 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <h4 className="font-medium text-gray-800 mb-1">{card.title}</h4>
-          {card.description && (
-            <p className="text-sm text-gray-600">{card.description}</p>
-          )}
+          {card.description && <p className="text-sm text-gray-600">{card.description}</p>}
         </div>
+
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={(e) => {
@@ -112,17 +103,11 @@ const Card = ({ card, listId, onDelete, onUpdate, onDragStart }) => {
 
           {showDropdown && (
             <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-10 min-w-[120px]">
-              <button
-                onClick={handleEdit}
-                className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
-              >
+              <button onClick={handleEdit} className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
                 <Edit3 size={14} />
                 Edit
               </button>
-              <button
-                onClick={handleDelete}
-                className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2"
-              >
+              <button onClick={handleDelete} className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2">
                 <Trash2 size={14} />
                 Delete
               </button>

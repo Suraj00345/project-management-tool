@@ -195,3 +195,21 @@ export const createListApi = async (projectId, title) => {
 
     return response.data.data.list;
 }
+
+// Task
+export const createTaskApi = async (projectId, listId, {
+    title, description, order
+}) => {
+    const response = await axios.post(`/projects/${projectId}/task`, {
+        title,
+        description,
+        order,
+        listId
+    });
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Task creation failed");
+    }
+
+    return response.data.data.task;
+}
