@@ -5,9 +5,13 @@ import { useRegistrationStore } from "../../store/useRegisrationStore";
 import { registerAPI } from "../../utils/api-client";
 import toast from "react-hot-toast";
 import SubmitButton from "./SubmitButton";
+import { useState } from "react";
+import clsx from "clsx";
+import EyeButton from "./EyeButton";
 
 const SignUpForm = () => {
   const { setRegistrationData, setVerify } = useRegistrationStore((state) => state);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -74,13 +78,15 @@ const SignUpForm = () => {
 
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="regEmail" className="block text-sm font-medium text-gray-700 mb-2">
               Email Address
             </label>
 
             <input
               type="email"
+              id="regEmail"
               className={errors.email ? "auth-input-error" : "auth-input"}
+              autoComplete="email"
               {...register("email", {
                 required: "Email Address is required",
                 pattern: {
@@ -95,15 +101,21 @@ const SignUpForm = () => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="regPassword" className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
 
-            <input
-              type="password"
-              className={errors.password ? "auth-input-error" : "auth-input"}
-              {...register("password", { required: "Password is required", minLength: { value: 6, message: "At least 6 characters needed" } })}
-            />
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="regPassword"
+                name="password"
+                autoComplete="new-password"
+                className={clsx(errors.password ? "auth-input-error" : "auth-input", "pr-12")}
+                {...register("password", { required: "Password is required", minLength: { value: 6, message: "At least 6 characters needed" } })}
+              />
+              <EyeButton showPassword={showPassword} setShowPassword={setShowPassword} />
+            </div>
 
             {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
           </div>
@@ -113,15 +125,20 @@ const SignUpForm = () => {
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
               Confirm Password
             </label>
-            <input
-              type="password"
-              className={errors.confirmPassword ? "auth-input-error" : "auth-input"}
-              placeholder=""
-              {...register("confirmPassword", {
-                required: "Confirm Password is required",
-                validate: (value) => value === watch("password") || "Passwords do not match",
-              })}
-            />
+
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
+                className={clsx(errors.confirmPassword ? "auth-input-error" : "auth-input", "pr-12")}
+                placeholder=""
+                {...register("confirmPassword", {
+                  required: "Confirm Password is required",
+                  validate: (value) => value === watch("password") || "Passwords do not match",
+                })}
+              />
+              <EyeButton showPassword={showPassword} setShowPassword={setShowPassword} />
+            </div>
 
             {errors.confirmPassword && <span className="text-red-500 text-sm">{errors.confirmPassword.message}</span>}
           </div>

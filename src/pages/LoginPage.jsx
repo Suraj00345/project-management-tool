@@ -7,8 +7,13 @@ import { loginApi } from "../utils/api-client";
 import { useAuthStore } from "../store/useAuthStore";
 import SubmitButton from "../components/Auth/SubmitButton";
 import { Helmet } from "react-helmet";
+import { useState } from "react";
+import clsx from "clsx";
+import EyeButton from "../components/Auth/EyeButton";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const { login } = useAuthStore((state) => state);
   const {
@@ -47,12 +52,13 @@ export default function Login() {
             <div className="space-y-6 mt-8">
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="loginEmail" className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address
                 </label>
 
                 <input
                   type="email"
+                  id="loginEmail"
                   className={errors.email ? "auth-input-error" : "auth-input"}
                   {...register("email", {
                     required: "Email Address is required",
@@ -68,14 +74,21 @@ export default function Login() {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="loginPassword" className="block text-sm font-medium text-gray-700 mb-2">
                   Password
                 </label>
-                <input
-                  type="password"
-                  className={errors.password ? "auth-input-error" : "auth-input"}
-                  {...register("password", { required: "Password is required", minLength: { value: 6, message: "At least 6 characters needed" } })}
-                />
+
+                <div className="relative w-full">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="loginPassword"
+                    name="password"
+                    autoComplete="new-password"
+                    className={clsx(errors.password ? "auth-input-error" : "auth-input", "pr-12")}
+                    {...register("password", { required: "Password is required", minLength: { value: 8, message: "At least 8 characters needed" } })}
+                  />
+                  <EyeButton showPassword={showPassword} setShowPassword={setShowPassword} />
+                </div>
 
                 {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
               </div>
