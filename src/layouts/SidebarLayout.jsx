@@ -9,6 +9,5 @@ const SidebarLayout = ({ children }) => {
     </div>
   );
 };
-layouts;
 
 export default SidebarLayout;
