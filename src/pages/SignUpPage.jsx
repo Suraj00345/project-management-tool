@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import FloatingElements from "../components/auth/FloatingElements";
 import SignUpForm from "../components/auth/SignUpForm";
-import VerificationForm from "../components/auth/verificationForm";
+import VerificationForm from "../components/auth/VerificationForm";
 import { useRegistrationStore } from "../store/useRegisrationStore";
 
 export default function Signup() {
