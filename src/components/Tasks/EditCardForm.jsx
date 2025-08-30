@@ -31,7 +31,6 @@ const EditCardForm = ({ task, onUpdate, onClose }) => {
 
       toast.success("Task updated successfully!");
     } catch (error) {
-      console.log(error);
       toast.error(error.message || "Failed to update task. Please try again.");
       reset();
     } finally {

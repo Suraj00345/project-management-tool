@@ -8,13 +8,6 @@ import ProjectCard from "../components/Projects/ProjectCard";
 import notfound from "../assets/file-corrupt-left-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 
-const data = [
-  { num: 10, type: "Total Projects" },
-  { num: 25, type: "Running Projects" },
-  { num: 15, type: "Completed Projects" },
-  { num: 40, type: "Total Tasks" },
-];
-
 const DashboardPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [projects, setProjects] = useState([]);
