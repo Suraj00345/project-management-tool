@@ -271,3 +271,14 @@ export const deleteTaskApi = async (taskId) => {
 
     return response.data.data.taskId;
 }
+
+
+export const getStatsApi = async () => {
+    const response = await axios.get(`/projects/stats`);
+
+    if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to fetch project stats");
+    }
+
+    return response.data.data;
+}

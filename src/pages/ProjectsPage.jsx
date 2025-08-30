@@ -17,7 +17,6 @@ const ProjectsPage = () => {
   const fetchProjects = useCallback(async () => {
     setIsLoading(true);
     const res = await getProjectsApi({
-      limit: 30,
       sortBy: "createdAt",
     });
 

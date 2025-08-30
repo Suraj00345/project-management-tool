@@ -1,10 +1,19 @@
 import React from "react";
 
-const Box = ({num, type}) => {
+const bgColors = {
+  "Total Projects": "bg-sky-200",
+  "Total Tasks": "bg-rose-300",
+  "Total Lists": "bg-emerald-300",
+  "Average Tasks": "bg-amber-200",
+};
+
+const Box = ({ num, type }) => {
+  const bgColor = bgColors[type] || "bg-gray-300";
+
   return (
-    <div className="h-20 sm:h-24 md:h-25 w-full sm:w-48 md:w-52 lg:w-55 mt-4 sm:mt-6 md:mt-7 rounded-xl border-2 border-gray-300 flex flex-col items-center justify-center p-4 min-h-[80px] sm:min-h-[96px] md:min-h-[100px]">
-      <h1 className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">{num}</h1>
-      <p className="font-medium text-sm sm:text-base text-center">{type}</p>
+    <div className={`h-24 sm:h-24 md:h-28 lg:h-38 w-full rounded-xl flex flex-col items-center justify-center p-4 gap-1 sm:gap-2 ${bgColor}`}>
+      <h1 className="font-bold text-4xl  lg:text-5xl 2xl:text-6xl opacity-80 ">{num}</h1>
+      <p className="font-medium text-sm lg:text-base text-center opacity-50">{type}</p>
     </div>
   );
 };
