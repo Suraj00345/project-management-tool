@@ -15,12 +15,7 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      email: "rs.2001.saha@gmail.com",
-      password: "12345678",
-    },
-  });
+  } = useForm();
 
   const onSubmit = async (data) => {
     if (isSubmitting) return;

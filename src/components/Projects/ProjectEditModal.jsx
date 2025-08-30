@@ -23,8 +23,6 @@ const ProjectEditModal = ({ projectId, onEdit, isOpen, setIsOpen }) => {
     setValue,
   } = useForm({
     defaultValues: {
-      title: "",
-      description: "",
       priority: priority[0].id,
     },
   });

@@ -14,15 +14,7 @@ const SignUpForm = () => {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      firstName: "Rhythm",
-      lastName: "Saha",
-      email: "rs.2001.saha@gmail.com",
-      password: "12345678",
-      confirmPassword: "12345678",
-    },
-  });
+  } = useForm();
 
   const onSubmit = async (data) => {
     if (isSubmitting) return;
