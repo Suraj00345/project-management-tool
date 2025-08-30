@@ -1,12 +1,98 @@
-# React + Vite
+# Organivo - Project Management Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Organivo is a modern project management tool designed to help teams organize, collaborate, and boost productivity. Built with React, Vite, Zustand, and Tailwind CSS, Organivo provides a seamless experience for managing projects, tasks, and team workflows.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication**: Secure registration, login, and email verification.
+- **Dashboard**: Overview of projects, tasks, lists, and analytics.
+- **Project Management**: Create, edit, archive, and delete projects with priority settings.
+- **Task Boards**: Kanban-style boards with draggable lists and tasks.
+- **Task Management**: Add, edit, delete, and reorder tasks within lists.
+- **Responsive Design**: Fully responsive UI for desktop and mobile.
+- **Profile Management**: Update profile info, password, and email.
+- **Notifications**: Real-time feedback with toast notifications.
+- **Modern UI**: Built with Tailwind CSS and Lucide icons.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Router](https://reactrouter.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Lucide Icons](https://lucide.dev/)
+- [Axios](https://axios-http.com/)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16+ recommended)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/organivo-project-management-tool.git
+   cd project-management-tool
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables:**
+   - Copy `.env.example` to `.env` and configure the API URL and other settings.
+
+4. **Start the development server:**
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. **Open in browser:**
+   - Visit [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal).
+
+## Project Structure
+
+```
+project-management-tool/
+├── public/                # Static assets and icons
+├── src/
+│   ├── assets/            # Images and SVGs
+│   ├── components/        # Reusable React components
+│   ├── hooks/             # Custom React hooks
+│   ├── Layouts/           # Layout components (Sidebar, Loader, etc.)
+│   ├── pages/             # Page components (Dashboard, Projects, etc.)
+│   ├── providers/         # Context and providers
+│   ├── store/             # Zustand stores
+│   ├── utils/             # Utility functions and API clients
+│   ├── App.jsx            # Main app component
+│   └── main.jsx           # Entry point
+├── .env                   # Environment variables
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+## Scripts
+
+- `npm run dev` — Start development server
+- `npm run build` — Build for production
+- `npm run preview` — Preview production build
+- `npm run lint` — Lint code with ESLint
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+**Organivo** — Empowering teams to organize, collaborate, and grow.
