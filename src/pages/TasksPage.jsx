@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import BoardHeader from "../components/Tasks/BoardHeader";
+import BoardHeader from "../components/tasks/BoardHeader";
 import { getProjectDetailsApi } from "../utils/api-client";
 import { useNavigate, useParams } from "react-router-dom";
-import Loader from "../Layouts/Loader";
-import ProjectScreen from "../components/Tasks/ProjectScreen";
+import Loader from "../layouts/Loader";
+import ProjectScreen from "../components/tasks/ProjectScreen";
 import { Helmet } from "react-helmet";
 
 const TaskPage = () => {

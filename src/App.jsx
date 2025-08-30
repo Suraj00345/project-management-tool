@@ -8,8 +8,8 @@ import TasksPage from "./pages/TasksPage";
 import UpdateProfile from "./pages/UpdateProfile";
 import AuthProvider from "./providers/AuthProvider";
 import AuthGuard from "./guards/AuthGuard";
-import HomeLayout from "./Layouts/HomeLayout";
-import SidebarLayout from "./Layouts/SidebarLayout";
+import HomeLayout from "./layouts/HomeLayout";
+import SidebarLayout from "./layouts/SidebarLayout";
 
 function App() {
   return (

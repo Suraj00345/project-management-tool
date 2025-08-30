@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Loader from "../Layouts/Loader";
-import EmptyProjects from "../components/Projects/EmptyProjects";
-import ProjectCard from "../components/Projects/ProjectCard";
-import CreateProject from "../components/Projects/CreateProject";
+import Loader from "../layouts/Loader";
+import EmptyProjects from "../components/projects/EmptyProjects";
+import ProjectCard from "../components/projects/ProjectCard";
+import CreateProject from "../components/projects/CreateProject";
 import { getProjectsApi } from "../utils/api-client";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";

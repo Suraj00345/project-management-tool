@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Box from "../components/DashboardComponents/box";
+import Box from "../components/dashboard/Box";
 import { Helmet } from "react-helmet";
 import { useAuthStore } from "../store/useAuthStore";
 import { getProjectsApi, getStatsApi } from "../utils/api-client";
-import Loader from "../Layouts/Loader";
-import ProjectCard from "../components/Projects/ProjectCard";
+import Loader from "../layouts/Loader";
+import ProjectCard from "../components/projects/ProjectCard";
 import notfound from "../assets/file-corrupt-left-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 

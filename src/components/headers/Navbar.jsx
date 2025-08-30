@@ -22,10 +22,7 @@ const Navbar = () => {
 
           <div className="hidden md:flex md:items-center space-x-6 lg:space-x-8">
             <div className="relative">
-              <button
-                onClick={toggleProfileDropdown}
-                className="cursor-pointer flex items-center space-x-2 focus:outline-none"
-              >
+              <button onClick={toggleProfileDropdown} className="cursor-pointer flex items-center space-x-2 focus:outline-none">
                 <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm lg:text-base uppercase">
                   {user?.firstName?.charAt(0)}
                   {user?.lastName?.charAt(0)}

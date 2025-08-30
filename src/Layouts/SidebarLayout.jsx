@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import DashboardSidebar from "../components/sidebar/DashboardSidebar";
 
@@ -10,5 +9,6 @@ const SidebarLayout = ({ children }) => {
     </div>
   );
 };
+layouts;
 
 export default SidebarLayout;

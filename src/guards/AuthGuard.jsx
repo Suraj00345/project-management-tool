@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Outlet, useNavigate } from "react-router-dom";
-import LoadingScreen from "../Layouts/LoadingScreen";
+import LoadingScreen from "../layouts/LoadingScreen";
 
 const AuthGuard = ({ children }) => {
   const authStatus = useAuthStore((state) => state.authStatus);

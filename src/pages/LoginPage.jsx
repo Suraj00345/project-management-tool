@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
-import FloatingElements from "../components/Auth/FloatingElements";
-import FormCard from "../components/Auth/FormCard";
+import FormCard from "../components/auth/FormCard";
+import FloatingElements from "../components/auth/FloatingElements";
+import SubmitButton from "../components/auth/SubmitButton";
+import EyeButton from "../components/auth/EyeButton";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { loginApi } from "../utils/api-client";
 import { useAuthStore } from "../store/useAuthStore";
-import SubmitButton from "../components/Auth/SubmitButton";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import clsx from "clsx";
-import EyeButton from "../components/Auth/EyeButton";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +44,7 @@ export default function Login() {
         <title>Login | Organivo</title>
         <meta name="description" content="Login to your Organivo account." />
       </Helmet>
+
       <FloatingElements />
 
       <section className="w-full">

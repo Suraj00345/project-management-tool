@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "lucide-react";
 import { priority } from "../../utils/data";
-import Loader from "../../Layouts/Loader";
+import Loader from "../../layouts/Loader";
 import { editProjectApi, getSingleProjectDataApi } from "../../utils/api-client";
 
 const ProjectEditModal = ({ projectId, onEdit, isOpen, setIsOpen }) => {
