@@ -37,10 +37,8 @@ const VerificationForm = () => {
 
   const onResendCode = async () => {
     try {
-      const response = await resendAccountVerification(email);
-      if (!response.success) {
-        throw new Error(response.message || "Failed to resend verification code");
-      }
+      await resendAccountVerification(email);
+
       toast.success("Verification code resent successfully!");
     } catch (error) {
       toast.error(error.message || "Failed to resend verification code");
