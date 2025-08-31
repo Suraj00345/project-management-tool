@@ -26,7 +26,9 @@ const SideBar = ({ tabs, activeTab, setActiveTab }) => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`cursor-pointer w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors ${
-                  activeTab === tab.id ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-700 hover:bg-gray-50"
+                  activeTab === tab.id
+                    ? "bg-blue-50 text-blue-600 border border-blue-200"
+                    : "text-gray-700 hover:bg-gray-50"
                 }`}
               >
                 <Icon size={20} className="mr-3" />

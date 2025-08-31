@@ -87,7 +87,7 @@ const DashboardPage = () => {
       </div>
 
       <h1 className="text-xl sm:text-2xl font-medium pt-12 sm:pt-16 md:pt-20 pb-4 sm:pb-6 md:pb-7">Recent Projects</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 sm:gap-4 md:gap-5 lg:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-4  gap-6 lg:gap-10">
         {projects.length === 0 ? (
           <p className="col-span-5 text-center text-gray-400">No recent projects found.</p>
         ) : (
