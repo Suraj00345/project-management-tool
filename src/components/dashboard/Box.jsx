@@ -1,11 +1,17 @@
 import React from "react";
 
 const bgColors = {
-  "Total Projects": "bg-gradient-to-r from-[#59B4FF] to-[#D0FF00]",
-  "Total Tasks": "bg-gradient-to-tr from-[#FCB045] to-[#833AB4]",
-  "Total Lists": "bg-gradient-to-r from-[#57C785] to-[#EDDD53]",
-  "Average Tasks": "bg-gradient-to-l from-[#00D4FF] to-[#41FA97]",
+  "Total Projects": "gd-1",
+  "Total Tasks": "gd-2",
+  "Total Lists": "gd-3",
+  "Average Tasks": "gd-4",
 };
+// const bgColors = {
+//   "Total Projects": "bg-gradient-to-r from-[#59B4FF] to-[#D0FF00]",
+//   "Total Tasks": "bg-gradient-to-tr from-[#FCB045] to-[#833AB4]",
+//   "Total Lists": "bg-gradient-to-r from-[#57C785] to-[#EDDD53]",
+//   "Average Tasks": "bg-gradient-to-l from-[#00D4FF] to-[#41FA97]",
+// };
 
 const Box = ({ num, type }) => {
   const bgColor = bgColors[type] || "bg-gray-300";
